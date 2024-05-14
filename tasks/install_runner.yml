@@ -118,6 +118,11 @@
     src: "{{ runner_dir }}/.service"
   register: runner_service
 
+- name: Get systemd service facts
+  ansible.builtin.service_facts:
+  register: service_facts
+  when: ansible_facts.system  == "Linux"
+
 - name: START and enable Github Actions Runner service (Linux)  # noqa no-changed-when
   ansible.builtin.command: "./svc.sh start"
   args:
